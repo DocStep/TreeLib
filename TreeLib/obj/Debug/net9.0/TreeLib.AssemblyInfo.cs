@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TreeLib")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0567750d7413499fa03d8cf2ca9d382278686ba4")]
 [assembly: System.Reflection.AssemblyProductAttribute("TreeLib")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TreeLib")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

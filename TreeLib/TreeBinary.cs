@@ -19,10 +19,6 @@ public class TreeBinary {
     public Node root;
     public int inputCount;
 
-    public int count;
-    public int depth;
-    public int width;
-
 
     public void InputRandom (int count, int range) {
         Console.WriteLine("Elements: " + count + "\nRange: " + range + "\n" + separator);
@@ -75,18 +71,87 @@ public class TreeBinary {
 
 
 
-    public int Count => _Count();
+    public int count => _Count();
     int _Count () {
-        count = 0;
+        int count = 0;
         count = CountNode(root, ref count);
         return count;
 
         int CountNode (Node node, ref int count) {
             if (node == null) return count;
+            
             count += node.count;
             if (node.left != null) CountNode(node.left, ref count);
             if (node.right != null) CountNode(node.right, ref count);
             return count;
+        }
+    }
+
+    public int depth => _Depth();
+    int _Depth () {
+        if (root == null) return 0;
+        int _depth = 1;
+        return DepthNode(root, _depth);
+
+        int DepthNode (Node node, int depth) {
+            if (node == null) return depth;
+
+            if (_depth < depth) _depth = depth;
+            if (node.left != null) DepthNode(node.left, depth + 1);
+            if (node.right != null) DepthNode(node.right, depth + 1);
+            return _depth;
+        }
+    }
+
+    public int width => _Width();
+    int _Width () {
+        if (root == null) return 0;
+        int _left = 0;
+        int _right = 0;
+        LeftNodes(root, 0);
+        RightNodes(root, 0);
+        int width = 1 + _right - _left;
+        return width;
+
+        void LeftNodes (Node node, int left) {
+            if (left < _left) _left = left;
+            if (node.left != null) LeftNodes(node.left, --_left);
+        }
+        void RightNodes (Node node, int right) {
+            if (_right < right) _right = right;
+            if (node.right != null) RightNodes(node.right, ++_right);
+        }
+    }
+
+    public int MinValue => _MinValue();
+    int _MinValue () {
+        if (root == null) return 0;
+
+        int minValue = root.value;
+        return MinNode(root);
+
+        int MinNode (Node node) {
+            if (node == null) return minValue;
+
+            if (node.value < minValue) minValue = node.value;
+            if (node.left != null) MinNode(node.left);
+            return minValue;
+        }
+    }
+
+    public int MaxValue => _MaxValue();
+    int _MaxValue () {
+        if (root == null) return 0;
+
+        int maxValue = root.value;
+        return MaxNode(root);
+
+        int MaxNode (Node node) {
+            if (node == null) return maxValue;
+
+            if (maxValue < node.value) maxValue = node.value;
+            if (node.right != null) MaxNode(node.right);
+            return maxValue;
         }
     }
 
@@ -97,80 +162,82 @@ public class TreeBinary {
         Console.WriteLine("Tree:");
         switch (mode) {
             case WriteMode.none:
-                string tree = "";
-                NodeOut(root, ref tree);
-                Console.WriteLine(tree);
+                WriteNode(root);
                 break;
-
-                string NodeOut (Node node, ref string tree) {
-                    if (node == null) return tree;
-
-                    tree += node.ToString() + "\n";
-                    if (node.left != null) NodeOut(node.left, ref tree);
-                    if (node.right != null) NodeOut(node.right, ref tree);
-                    return tree;
-                }
             case WriteMode.Fancy:
-                WriteBranchesIncrease(root);
+                WriteBranchesIncreaseNode(root);
                 break;
-
-                void WriteBranchesIncrease (Node node, string prefix = "", bool isRight = true) {
-                    if (node == null) {
-                        lib.WriteEmpty();
-                        return;
-                    }
-
-                    if (node.left != null)
-                        WriteBranchesIncrease(node.left, prefix + (isRight ? "│   " : "    "), false);
-                    Console.Write(prefix + (isRight ? "└──" : "┌──"));
-                    node.Write();
-                    if (node.right != null)
-                        WriteBranchesIncrease(node.right, prefix + (isRight ? "    " : "│   "), true);
-                }
-                void WriteBranchesRotated (Node node, string prefix = "", bool isRight = true) {
-                    if (node == null) {
-                        lib.WriteEmpty();
-                        return;
-                    }
-
-                    if (node.right != null)
-                        WriteBranchesRotated(node.right, prefix + (isRight ? "    " : "│   "), true);
-                    Console.Write(prefix + (isRight ? "└──" : "┌──"));
-                    node.Write();
-                    if (node.left != null)
-                        WriteBranchesRotated(node.left, prefix + (isRight ? "│   " : "    "), false);
-                }
         }
         
-        if (metrics) {
-            Metrics();
-            WriteMetrics();
-        }
+        if (metrics) WriteMetrics();
     }
 
-    public void Metrics () {
+
+    void WriteNode (Node node) {
+        if (node == null) return;
+
+        node.Write();
+        if (node.left != null) WriteNode(node.left);
+        if (node.right != null) WriteNode(node.right);
+    }
+    void WriteBranchesIncreaseNode (Node node, string prefix = "", bool isRight = true) {
+        if (node == null) {
+            lib.WriteEmpty();
+            return;
+        }
+
+        if (node.left != null)
+            WriteBranchesIncreaseNode(node.left, prefix + (isRight ? "│   " : "    "), false);
+        Console.Write(prefix + (isRight ? "└──" : "┌──"));
+        node.Write();
+        if (node.right != null)
+            WriteBranchesIncreaseNode(node.right, prefix + (isRight ? "    " : "│   "), true);
+    }
+    void WriteBranchesRotatedNode (Node node, string prefix = "", bool isRight = true) {
+        if (node == null) {
+            lib.WriteEmpty();
+            return;
+        }
+
+        if (node.right != null)
+            WriteBranchesRotatedNode(node.right, prefix + (isRight ? "    " : "│   "), true);
+        Console.Write(prefix + (isRight ? "└──" : "┌──"));
+        node.Write();
+        if (node.left != null)
+            WriteBranchesRotatedNode(node.left, prefix + (isRight ? "│   " : "    "), false);
+    }
+
+    public void WriteMetrics () {
+        int count = 0;
+        int depth = 0;
         int left = 0;
         int right = 0;
+        int width = 0;
+        int minValue = root.value;
+        int maxValue = root.value;
         if (root != null) {
             MetricsNode(root, 1, 0);
             width = right - left + 1;
         }
 
-        void MetricsNode (Node node, int depth, int margin) {
-            if (this.depth < depth) this.depth = depth;
-            if (right < margin) right = margin;
+        void MetricsNode (Node node, int _depth, int margin) {
+            if (depth < _depth) depth = _depth;
             if (margin < left) left = margin;
+            if (right < margin) right = margin;
             count += node.count;
+            if (node.value < minValue) minValue = node.value;
+            if (maxValue < node.value) maxValue = node.value;
 
-            if (node.left != null) MetricsNode(node.left, depth + 1, margin - 1);
-            if (node.right != null) MetricsNode(node.right, depth + 1, margin + 1);
+            if (node.left != null) MetricsNode(node.left, _depth + 1, margin - 1);
+            if (node.right != null) MetricsNode(node.right, _depth + 1, margin + 1);
         }
-    }
-    public void WriteMetrics () {
-        Console.WriteLine($"{separator}\n" +
+
+        Console.WriteLine(/*$"{separator}\n" +*/
             $"Count: {count}\n" +
             $"Depth: {depth}\n" +
-            $"Width: {width}");
+            $"Width: {width}\n" +
+            $"Min: {minValue}\n" +
+            $"Max: {maxValue}");
     }
 
 

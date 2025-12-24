@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "D:\\_workspace\\VS\\TreeLib\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{0A1E64AE-D0ED-E6EE-0445-2888C87C6BF3}|Test\\Test.csproj|d:\\_workspace\\vs\\treelib\\test\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0A1E64AE-D0ED-E6EE-0445-2888C87C6BF3}|Test\\Test.csproj|solutionrelative:test\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{CAF76C96-EA96-2DA5-B6DC-F5D76D282BEE}|TreeLib\\TreeLib.csproj|d:\\_workspace\\vs\\treelib\\treelib\\treebinary.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CAF76C96-EA96-2DA5-B6DC-F5D76D282BEE}|TreeLib\\TreeLib.csproj|solutionrelative:treelib\\treebinary.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0A1E64AE-D0ED-E6EE-0445-2888C87C6BF3}|Test\\Test.csproj|d:\\_workspace\\vs\\treelib\\test\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0A1E64AE-D0ED-E6EE-0445-2888C87C6BF3}|Test\\Test.csproj|solutionrelative:test\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{CAF76C96-EA96-2DA5-B6DC-F5D76D282BEE}|TreeLib\\TreeLib.csproj|d:\\_workspace\\vs\\treelib\\treelib\\node.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -30,17 +30,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\_workspace\\VS\\TreeLib\\Test\\Program.cs",
               "RelativeDocumentMoniker": "Test\\Program.cs",
               "ToolTip": "D:\\_workspace\\VS\\TreeLib\\Test\\Program.cs",
               "RelativeToolTip": "Test\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAArAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-23T11:42:32.647Z",
               "IsPinned": true,
@@ -56,18 +56,17 @@
               "RelativeToolTip": "TreeLib\\lib.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-24T01:43:20.193Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-24T01:43:20.193Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "TreeBinary.cs",
               "DocumentMoniker": "D:\\_workspace\\VS\\TreeLib\\TreeLib\\TreeBinary.cs",
               "RelativeDocumentMoniker": "TreeLib\\TreeBinary.cs",
               "ToolTip": "D:\\_workspace\\VS\\TreeLib\\TreeLib\\TreeBinary.cs",
               "RelativeToolTip": "TreeLib\\TreeBinary.cs",
-              "ViewState": "AgIAAEgAAAAAAAAAAAAiwFMAAAAhAAAAAAAAAA==",
+              "ViewState": "AgIAAF0AAAAAAAAAAAAiwG0AAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-23T11:43:55.72Z",
               "EditorCaption": ""
@@ -82,8 +81,7 @@
               "RelativeToolTip": "TreeLib\\Node.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAiwB8AAAA8AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-23T11:39:13.675Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-23T11:39:13.675Z"
             },
             {
               "$type": "Document",

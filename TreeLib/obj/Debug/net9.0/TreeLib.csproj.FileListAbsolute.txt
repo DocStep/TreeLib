@@ -9,3 +9,4 @@ D:\_workspace\VS\TreeLib\TreeLib\obj\Debug\net9.0\TreeLib.dll
 D:\_workspace\VS\TreeLib\TreeLib\obj\Debug\net9.0\refint\TreeLib.dll
 D:\_workspace\VS\TreeLib\TreeLib\obj\Debug\net9.0\TreeLib.pdb
 D:\_workspace\VS\TreeLib\TreeLib\obj\Debug\net9.0\ref\TreeLib.dll
+D:\_workspace\VS\TreeLib\TreeLib\obj\Debug\net9.0\TreeLib.sourcelink.json
