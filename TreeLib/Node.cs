@@ -1,4 +1,7 @@
-﻿using System.Xml.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Xml.Linq;
+using TreeLib;
 
 namespace TreeLib;
 
@@ -37,6 +40,12 @@ public class Node {
             Console.ForegroundColor = color = colorSingle;
         else 
             Console.ForegroundColor = color = colorMultiple;
+    }
+
+    public static void WritePath (List<Node> path, string add = "") {
+        Console.WriteLine($"Path: " + (add == "" ? "" : add));
+        for (int i = 0; i < path.Count; i++) 
+            Console.WriteLine(path[i]);
     }
 
 }

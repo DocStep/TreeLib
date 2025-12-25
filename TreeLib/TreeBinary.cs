@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Xml.Linq;
 
 namespace TreeLib;
 
@@ -11,23 +9,20 @@ public enum WriteMode {
 }
 
 
-public class TreeBinary {
+public class TreeBinary : Tree {
     public TreeBinary () { }
 
-    public Random rand = new Random();
-
     public Node root;
-    public int inputCount;
 
 
-    public void InputRandom (int count, int range) {
+    public override void InputRandom (int count, int range) {
         Console.WriteLine("Elements: " + count + "\nRange: " + range + "\n" + separator);
         for (int i = 0; i < count; i++)
             Add(rand.Next(range));
     }
-    public void InputLine () {
+    public override void InputLine (string line) {
         Console.WriteLine("Elements:");
-        int[] values = lib.string_numbers();
+        int[] values = lib.string_numbers(line);
         if (values == null) return;
         for (int n = 0; n < values.Length; n++)
             Add(values[n]);
@@ -36,7 +31,7 @@ public class TreeBinary {
 
 
 
-    public void Add (Node node) {
+    public override void Add (Node node) {
         AddNode(node);
 
         void AddNode (Node node, Node nodeParent = null) {
@@ -58,28 +53,26 @@ public class TreeBinary {
             }
         }
     }
-    public void Add (Node[] nodes) {
+    public override void Add (Node[] nodes) {
         for (int n = 0; n < nodes.Length; n++)
             Add(nodes[n]);
     }
 
-    public void Add (int value) => Add(new Node(value));
-    public void Add (int[] values) {
+    public override void Add (int value) => Add(new Node(value));
+    public override void Add (int[] values) {
         for (int v = 0; v < values.Length; v++)
             Add(values[v]);
     }
 
 
 
-    public int count => _Count();
-    int _Count () {
+    public override int count => Count();
+    int Count () {
         int count = 0;
         count = CountNode(root, ref count);
         return count;
 
         int CountNode (Node node, ref int count) {
-            if (node == null) return count;
-            
             count += node.count;
             if (node.left != null) CountNode(node.left, ref count);
             if (node.right != null) CountNode(node.right, ref count);
@@ -87,15 +80,13 @@ public class TreeBinary {
         }
     }
 
-    public int depth => _Depth();
-    int _Depth () {
+    public override int depth => Depth();
+    int Depth () {
         if (root == null) return 0;
         int _depth = 1;
         return DepthNode(root, _depth);
 
         int DepthNode (Node node, int depth) {
-            if (node == null) return depth;
-
             if (_depth < depth) _depth = depth;
             if (node.left != null) DepthNode(node.left, depth + 1);
             if (node.right != null) DepthNode(node.right, depth + 1);
@@ -103,62 +94,96 @@ public class TreeBinary {
         }
     }
 
-    public int width => _Width();
-    int _Width () {
+    public override int width => Width();
+    int Width () {
         if (root == null) return 0;
-        int _left = 0;
-        int _right = 0;
+        int left = 0;
+        int right = 0;
         LeftNodes(root, 0);
         RightNodes(root, 0);
-        int width = 1 + _right - _left;
+        int width = 1 + right - left;
         return width;
 
-        void LeftNodes (Node node, int left) {
-            if (left < _left) _left = left;
-            if (node.left != null) LeftNodes(node.left, --_left);
+        void LeftNodes (Node node, int margin) {
+            if (margin < left) left = margin;
+            if (node.left != null) LeftNodes(node.left, --left);
         }
-        void RightNodes (Node node, int right) {
-            if (_right < right) _right = right;
-            if (node.right != null) RightNodes(node.right, ++_right);
+        void RightNodes (Node node, int margin) {
+            if (right < margin) right = margin;
+            if (node.right != null) RightNodes(node.right, ++right);
         }
     }
 
-    public int MinValue => _MinValue();
-    int _MinValue () {
-        if (root == null) return 0;
+    public override Node min => Min();
+    Node Min () {
+        if (root == null) return null;
 
-        int minValue = root.value;
+        Node minValue = root;
         return MinNode(root);
 
-        int MinNode (Node node) {
-            if (node == null) return minValue;
-
-            if (node.value < minValue) minValue = node.value;
+        Node MinNode (Node node) {
+            if (node.value < minValue.value) minValue = node;
             if (node.left != null) MinNode(node.left);
             return minValue;
         }
     }
 
-    public int MaxValue => _MaxValue();
-    int _MaxValue () {
-        if (root == null) return 0;
+    public override Node max => Max();
+    Node Max () { 
+        if (root == null) return null;
 
-        int maxValue = root.value;
-        return MaxNode(root);
+        Node maxValue = root;
+        return MinNode(root);
 
-        int MaxNode (Node node) {
-            if (node == null) return maxValue;
-
-            if (maxValue < node.value) maxValue = node.value;
-            if (node.right != null) MaxNode(node.right);
+        Node MinNode (Node node) {
+            if (maxValue.value < node.value) maxValue = node;
+            if (node.right != null) MinNode(node.right);
             return maxValue;
+        }
+    }
+
+
+    public override Node deepest => Deepest();
+    Node Deepest () {
+        if (root == null) return null;
+        Node furthest = root;
+        int _depth = 1;
+        DepthNode(root, _depth);
+        return furthest;
+
+        bool DepthNode (Node node, int depth) {
+            if (_depth < depth) {
+                _depth = depth;
+                furthest = node;
+            }
+            if (node.left != null) DepthNode(node.left, depth + 1);
+            if (node.right != null) DepthNode(node.right, depth + 1);
+            return false;
+        }
+    }
+
+    public override List<Node> NodePath (Node nodeTarget, bool reversed = false) {
+        List<Node> path = new List<Node>();
+        if (nodeTarget == null) return path;
+        DepthNode(root);
+        return path;
+
+        bool DepthNode (Node node) {
+            bool found = node == nodeTarget;
+            if (node.left != null) found |= DepthNode(node.left);
+            if (node.right != null) found |= DepthNode(node.right);
+            if (found) {
+                if (reversed) path.Add(node);
+                else path.Insert(0, node);
+            }
+            return found;
         }
     }
 
 
     public static readonly string separator = "----------";
 
-    public void Write (bool metrics = false, WriteMode mode = WriteMode.Fancy) {
+    public void Write (WriteMode mode = WriteMode.Fancy) {
         Console.WriteLine("Tree:");
         switch (mode) {
             case WriteMode.none:
@@ -168,12 +193,10 @@ public class TreeBinary {
                 WriteBranchesIncreaseNode(root);
                 break;
         }
-        
-        if (metrics) WriteMetrics();
     }
 
 
-    void WriteNode (Node node) {
+    static  void WriteNode (Node node) {
         if (node == null) return;
 
         node.Write();
@@ -182,7 +205,7 @@ public class TreeBinary {
     }
     void WriteBranchesIncreaseNode (Node node, string prefix = "", bool isRight = true) {
         if (node == null) {
-            lib.WriteEmpty();
+            Tree.WriteEmpty();
             return;
         }
 
@@ -195,7 +218,7 @@ public class TreeBinary {
     }
     void WriteBranchesRotatedNode (Node node, string prefix = "", bool isRight = true) {
         if (node == null) {
-            lib.WriteEmpty();
+            Tree.WriteEmpty();
             return;
         }
 
@@ -207,47 +230,29 @@ public class TreeBinary {
             WriteBranchesRotatedNode(node.left, prefix + (isRight ? "│   " : "    "), false);
     }
 
+
     public void WriteMetrics () {
-        int count = 0;
-        int depth = 0;
-        int left = 0;
-        int right = 0;
-        int width = 0;
-        int minValue = root.value;
-        int maxValue = root.value;
-        if (root != null) {
-            MetricsNode(root, 1, 0);
-            width = right - left + 1;
-        }
-
-        void MetricsNode (Node node, int _depth, int margin) {
-            if (depth < _depth) depth = _depth;
-            if (margin < left) left = margin;
-            if (right < margin) right = margin;
-            count += node.count;
-            if (node.value < minValue) minValue = node.value;
-            if (maxValue < node.value) maxValue = node.value;
-
-            if (node.left != null) MetricsNode(node.left, _depth + 1, margin - 1);
-            if (node.right != null) MetricsNode(node.right, _depth + 1, margin + 1);
-        }
-
-        Console.WriteLine(/*$"{separator}\n" +*/
-            $"Count: {count}\n" +
-            $"Depth: {depth}\n" +
-            $"Width: {width}\n" +
-            $"Min: {minValue}\n" +
-            $"Max: {maxValue}");
+        Console.WriteLine($"Count: {count}");
+        Console.WriteLine($"Depth: {depth}");
+        Console.WriteLine($"Width: {width}");
+        Console.WriteLine($"Min: {min.value}");
+        Console.WriteLine($"Max: {max.value}");
+        Console.WriteLine($"Deepest: {deepest.value}");
+        //lib.WritePath(furthestPath);
     }
 
 
-    public void Add_test () {
-        int[] staticValues = new int[] { 5, 2, 7, 4, 8, 9, 11, 3, 1 };
-        Add(staticValues);
-    }
 
     public void Clear () {
         root = null;
+    }
+
+
+
+    [Obsolete]
+    public void Add_test () {
+        int[] staticValues = new int[] { 5, 2, 7, 4, 8, 9, 11, 3, 1 };
+        Add(staticValues);
     }
 
 }

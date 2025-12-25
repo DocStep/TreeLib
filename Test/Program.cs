@@ -7,10 +7,10 @@ internal class Program {
     static void Main (string[] args) {
         TreeBinary tree = new TreeBinary();
         tree.InputRandom(count: 10, range: 100);
-        tree.Write(metrics: false);
-        //Console.WriteLine($"Depth: {tree.depth}");
-        //Console.WriteLine($"Width: {tree.width}");
-        Console.WriteLine($"Width: {tree.MaxValue}");
-
+        tree.Write();
+        //tree.WriteMetrics();
+        //Console.WriteLine();
+        List<Node> path = tree.NodePath(tree.deepest);
+        //Node.WritePath(path, "Deepest");
     }
 }
