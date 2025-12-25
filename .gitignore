@@ -41,7 +41,7 @@ Test/
 
 # VS
 .vs/
-.slnx
+*.slnx
 
 # Others
 ~$*

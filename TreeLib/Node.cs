@@ -22,9 +22,10 @@ public class Node {
     public static readonly ConsoleColor colorMultiple = ConsoleColor.Cyan;
     public static ConsoleColor color;
 
-    public void Write () {
+    public void Write (bool newLine = false) {
         changeColor();
-        Console.WriteLine(ToString());
+        if (newLine) Console.WriteLine(ToString());
+        else Console.Write(ToString());
         if (color != colorSingle) Console.ForegroundColor = color = colorSingle;
     }
 
@@ -44,8 +45,10 @@ public class Node {
 
     public static void WritePath (List<Node> path, string add = "") {
         Console.WriteLine($"Path: " + (add == "" ? "" : add));
-        for (int i = 0; i < path.Count; i++) 
-            Console.WriteLine(path[i]);
+        for (int i = 0; i < path.Count; i++) {
+            path[i].Write(newLine: true);
+            //Console.WriteLine();
+        }
     }
 
 }

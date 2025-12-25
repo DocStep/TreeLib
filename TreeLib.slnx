@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="Test/Test.csproj" />
-  <Project Path="TreeLib/TreeLib.csproj" />
-</Solution>

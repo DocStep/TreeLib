@@ -199,7 +199,7 @@ public class TreeBinary : Tree {
     static  void WriteNode (Node node) {
         if (node == null) return;
 
-        node.Write();
+        node.Write(newLine: true);
         if (node.left != null) WriteNode(node.left);
         if (node.right != null) WriteNode(node.right);
     }
@@ -212,7 +212,7 @@ public class TreeBinary : Tree {
         if (node.left != null)
             WriteBranchesIncreaseNode(node.left, prefix + (isRight ? "│   " : "    "), false);
         Console.Write(prefix + (isRight ? "└──" : "┌──"));
-        node.Write();
+        node.Write(newLine: true);
         if (node.right != null)
             WriteBranchesIncreaseNode(node.right, prefix + (isRight ? "    " : "│   "), true);
     }
@@ -225,7 +225,7 @@ public class TreeBinary : Tree {
         if (node.right != null)
             WriteBranchesRotatedNode(node.right, prefix + (isRight ? "    " : "│   "), true);
         Console.Write(prefix + (isRight ? "└──" : "┌──"));
-        node.Write();
+        node.Write(newLine: true);
         if (node.left != null)
             WriteBranchesRotatedNode(node.left, prefix + (isRight ? "│   " : "    "), false);
     }
