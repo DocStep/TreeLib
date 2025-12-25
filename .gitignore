@@ -40,7 +40,8 @@ ScaffoldingReadMe.txt
 Test/
 
 # VS
-*.vs/
+.vs/
+.slnx
 
 # Others
 ~$*
