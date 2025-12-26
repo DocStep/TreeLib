@@ -10,10 +10,6 @@ tree.WriteMetrics();
 # Installation
 ```
 git clone https://github.com/DocStep/TreeLib.git
-```
-```
 cd TreeLib
-```
-```
 dotnet build
 ```

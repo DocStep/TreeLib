@@ -47,7 +47,6 @@ public class Node {
         Console.WriteLine($"Path: " + (add == "" ? "" : add));
         for (int i = 0; i < path.Count; i++) {
             path[i].Write(newLine: true);
-            //Console.WriteLine();
         }
     }
 
